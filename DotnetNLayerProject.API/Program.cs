@@ -1,11 +1,17 @@
 using DotnetNLayerProject.Core.Repositories;
+using DotnetNLayerProject.Core.Services;
 using DotnetNLayerProject.Core.UnitOfWorks;
 using DotnetNLayerProject.Repository;
 using DotnetNLayerProject.Repository.Repositories;
 using DotnetNLayerProject.Repository.UnitOfWork;
+using DotnetNLayerProject.Service.Mapping;
+using DotnetNLayerProject.Service.Services;
+using DotnetNLayerProject.Service.Validations;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +23,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+builder.Services.AddAutoMapper(typeof(MapProfile));
+
+//Fluent Validations
+builder.Services.AddControllers()
+    .AddFluentValidation(x =>
+    {
+        x.RegisterValidatorsFromAssemblyContaining<BlogDtoValidator>();
+        x.RegisterValidatorsFromAssemblyContaining<CategoryDtoValidator>();
+        x.RegisterValidatorsFromAssemblyContaining<WriterDtoValidator>();
+    });
 
 //AppDbContext islemleri
 builder.Services.AddDbContext<AppDbContext>(x =>
