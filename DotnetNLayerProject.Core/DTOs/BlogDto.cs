@@ -10,5 +10,8 @@ namespace DotnetNLayerProject.Core.DTOs
     {
         public string BlogTitle { get; set; }
         public string BlogContent { get; set; }
+
+        public int WriterID { get; set; }    
+        public int CategoryID { get; set; }
     }
 }
