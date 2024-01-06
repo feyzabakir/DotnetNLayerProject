@@ -1,4 +1,5 @@
-﻿using DotnetNLayerProject.Core.Models;
+﻿using DotnetNLayerProject.Core.DTOs;
+using DotnetNLayerProject.Core.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DotnetNLayerProject.Service.Validations
 {
-    public class WriterDtoValidator : AbstractValidator<Writer>
+    public class WriterDtoValidator : AbstractValidator<WriterDto>
     {
         public WriterDtoValidator()
         {
@@ -16,7 +17,6 @@ namespace DotnetNLayerProject.Service.Validations
 
             RuleFor(x => x.WriterMail).NotEmpty().EmailAddress().WithMessage("Geçeri bir mail adresi giriniz.");
 
-            RuleFor(x => x.WriterPassword).NotEmpty().MinimumLength(6).WithMessage("Şifre en az 6 karakter uzunluğunda olmalı.");
         }
     }
 }

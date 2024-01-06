@@ -1,4 +1,5 @@
-﻿using DotnetNLayerProject.Core.Models;
+﻿using DotnetNLayerProject.Core.DTOs;
+using DotnetNLayerProject.Core.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DotnetNLayerProject.Service.Validations
 {
-    public class BlogDtoValidator : AbstractValidator<Blog>
+    public class BlogDtoValidator : AbstractValidator<BlogDto>
     {
         public BlogDtoValidator() 
         {

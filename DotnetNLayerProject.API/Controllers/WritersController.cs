@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DotnetNLayerProject.Core.DTOs;
+using DotnetNLayerProject.Core.DTOs.Authentication;
 using DotnetNLayerProject.Core.Models;
 using DotnetNLayerProject.Core.Services;
 using Microsoft.AspNetCore.Http;
@@ -49,12 +50,22 @@ namespace DotnetNLayerProject.API.Controllers
             return CreateActionResult(GlobalResultDto<NoContentDto>.Success(204));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Save(WriterDto writerDto)
+        [HttpPost("Signup")]
+        public async Task<IActionResult> SignUp(AuthRequestDto authDto)
         {
-            var writer = await _writerService.AddAsync(_mapper.Map<Writer>(writerDto));
-            var writerrDtos = _mapper.Map<WriterDto>(writer);
-            return CreateActionResult(GlobalResultDto<WriterDto>.Success(201, writerrDtos));
+            var writer = _writerService.SignUp(authDto);
+            var writerDto = _mapper.Map<WriterDto>(writer);
+            return CreateActionResult(GlobalResultDto<WriterDto>.Success(201, writerDto));
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(AuthRequestDto authDto)
+        {
+            var result = _writerService.Login(authDto);
+            if (result.Writer != null)
+                return CreateActionResult(GlobalResultDto<AuthResponseDto>.Success(200, result));
+            else
+                return CreateActionResult(GlobalResultDto<AuthResponseDto>.Success(401, result));
         }
     }
 }
