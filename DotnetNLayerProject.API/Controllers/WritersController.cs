@@ -37,7 +37,15 @@ namespace DotnetNLayerProject.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(WriterDto writerDto)
         {
-            await _writerService.UpdateAsync(_mapper.Map<Writer>(writerDto));
+            //await _writerService.UpdateAsync(_mapper.Map<Writer>(writerDto));
+            //return CreateActionResult(GlobalResultDto<NoContentDto>.Success(204));
+
+            var writerId = await _writerService.GetById(writerDto.Id);
+            _mapper.Map(writerDto, writerId);  // AutoMapper kullanarak WriterDto'dan Writer'a eşleme yapma
+
+            writerId.WriterPassword = writerId.WriterPassword; // Şifre alanını eski değeriyle güncellememe işlemi
+
+            await _writerService.UpdateAsync(writerId);
             return CreateActionResult(GlobalResultDto<NoContentDto>.Success(204));
         }
 

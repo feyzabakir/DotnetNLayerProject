@@ -20,7 +20,7 @@ namespace DotnetNLayerProject.Repository.Configurations
 
             builder.Property(x => x.WriterName).HasMaxLength(100).IsRequired();
             builder.Property(x => x.WriterMail).HasMaxLength(250).IsRequired();
-         //   builder.Property(x => x.WriterPassword).IsRequired().HasMaxLength(250);
+            builder.Property(x => x.WriterPassword).IsRequired().HasMaxLength(250);
         }
     }
 }
